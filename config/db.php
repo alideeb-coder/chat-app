@@ -15,7 +15,7 @@ class Database
         $this->dbName   = getenv('DB_NAME')     ?: 'chat_app';
         $this->user     = getenv('DB_USER')     ?: 'root';
         $this->password = getenv('DB_PASSWORD') ?: '';
-        $this->port     = (int)(getenv('DB_PORT') ?: 3306);
+        $this->port     = (int)(getenv('DB_PORT') ?: 4000);
     }
 
     public static function getInstance(): self
@@ -35,14 +35,13 @@ class Database
                 $options = [
                     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    
                     PDO::MYSQL_ATTR_SSL_CA       => '/etc/ssl/certs/ca-certificates.crt',
                 ];
                 
                 $this->conn = new PDO($dsn, $this->user, $this->password, $options);
                 
             } catch (PDOException $e) {
-                die(" Database Connection Failed: " . $e->getMessage());
+                die("❌ Database Connection Failed: " . $e->getMessage());
             }
         }
         return $this->conn;
