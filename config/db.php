@@ -8,13 +8,28 @@ class Database {
     private ?PDO $conn = null;
     private static ?self $instance = null;
 
-    private function __construct() {
-        $config = require __DIR__ . '/env.php';
-        $this->host = $config['db_host'];
-        $this->dbName = $config['db_name'];
-        $this->user = $config['db_user'];
-        $this->password = $config['db_password'];
-        $this->port = $config['db_port'];
+    private function __construct()
+    {
+        $envHost     = getenv('DB_HOST');
+        $envDbName   = getenv('DB_NAME');
+        $envUser     = getenv('DB_USER');
+        $envPassword = getenv('DB_PASSWORD');
+        $envPort     = getenv('DB_PORT');
+
+        if ($envHost && $envDbName && $envUser && $envPassword) {
+            $this->host     = $envHost;
+            $this->dbName   = $envDbName;
+            $this->user     = $envUser;
+            $this->password = $envPassword;
+            $this->port     = (int)($envPort ?: 4000);
+        } else {
+            $config = require __DIR__ . '/env.php';
+            $this->host     = $config['db_host'];
+            $this->dbName   = $config['db_name'];
+            $this->user     = $config['db_user'];
+            $this->password = $config['db_password'];
+            $this->port     = $config['db_port'] ?? 4000;
+        }
     }
 
     public static function getInstance(): self {
