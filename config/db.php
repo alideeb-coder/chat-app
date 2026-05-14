@@ -10,26 +10,11 @@ class Database {
 
     private function __construct()
     {
-        $envHost     = getenv('DB_HOST');
-        $envDbName   = getenv('DB_NAME');
-        $envUser     = getenv('DB_USER');
-        $envPassword = getenv('DB_PASSWORD');
-        $envPort     = getenv('DB_PORT');
-
-        if ($envHost && $envDbName && $envUser && $envPassword) {
-            $this->host     = $envHost;
-            $this->dbName   = $envDbName;
-            $this->user     = $envUser;
-            $this->password = $envPassword;
-            $this->port     = (int)($envPort ?: 4000);
-        } else {
-            $config = require __DIR__ . '/env.php';
-            $this->host     = $config['db_host'];
-            $this->dbName   = $config['db_name'];
-            $this->user     = $config['db_user'];
-            $this->password = $config['db_password'];
-            $this->port     = $config['db_port'] ?? 4000;
-        }
+        $this->host     = getenv('DB_HOST')     ?: 'localhost';
+        $this->dbName   = getenv('DB_NAME')     ?: 'chat_app';
+        $this->user     = getenv('DB_USER')     ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+        $this->port     = (int)(getenv('DB_PORT') ?: 3306);
     }
 
     public static function getInstance(): self {
