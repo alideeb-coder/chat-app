@@ -41,6 +41,7 @@ class Database
                 $this->conn = new PDO($dsn, $this->user, $this->password, $options);
                 
             } catch (PDOException $e) {
+                die("🔍 DB_PASSWORD = '" . getenv('DB_PASSWORD') . "' (length: " . strlen(getenv('DB_PASSWORD') ?: '') . ")");
                 die("❌ Database Connection Failed: " . $e->getMessage());
             }
         }
