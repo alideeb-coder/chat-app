@@ -14,7 +14,7 @@ class Database
         $this->host     = getenv('DB_HOST')     ?: 'localhost';
         $this->dbName   = getenv('DB_NAME')     ?: 'chat_app';
         $this->user     = getenv('DB_USER')     ?: 'root';
-        $this->password = getenv('DB_PASSWORD') ?: '';
+        $this->password = getenv('DB_PASSWORD') ?? '';
         $this->port     = (int)(getenv('DB_PORT') ?: 4000);
     }
 
@@ -42,7 +42,7 @@ class Database
                 $this->conn = new PDO($dsn, $this->user, $this->password, $options);
                 
             } catch (PDOException $e) {
-                die("🔍 DB_PASSWORD = '" . getenv('DB_PASSWORD') . "' (length: " . strlen(getenv('DB_PASSWORD') ?: '') . ")");
+                
                 die("❌ Database Connection Failed: " . $e->getMessage());
             }
         }
