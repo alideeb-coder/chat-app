@@ -1,11 +1,12 @@
 <?php
-class Database {
+class Database
+{
     private string $host;
     private string $dbName;
     private string $user;
     private string $password;
-    private int $port;
-    private ?PDO $conn = null;
+    private int    $port;
+    private ?PDO   $conn     = null;
     private static ?self $instance = null;
 
     private function __construct()
@@ -17,24 +18,32 @@ class Database {
         $this->port     = (int)(getenv('DB_PORT') ?: 3306);
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function getConnection(): PDO {
+    public function getConnection(): PDO
+    {
         if ($this->conn === null) {
             try {
                 $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbName};charset=utf8mb4";
-                $this->conn = new PDO($dsn, $this->user, $this->password, [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                
+                
+                $options = [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]);
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false, 
+                ];
+                
+                $this->conn = new PDO($dsn, $this->user, $this->password, $options);
+                
             } catch (PDOException $e) {
-                error_log("Database Connection Failed: " . $e->getMessage());
-                die("Database Connection Failed");
+                
+                die("❌ Database Connection Failed: " . $e->getMessage());
             }
         }
         return $this->conn;
