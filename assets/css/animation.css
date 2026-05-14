@@ -1,0 +1,14 @@
+@keyframes slideDown {
+    0%   { opacity: 0; transform: translate(-50%, -20px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
+  }
+  @keyframes shrink {
+    0%   { width: 100%; }
+    100% { width: 0%; }
+  }
+  .animate-slideDown {
+    animation: slideDown 0.5s ease-out;
+  }
+  .animate-shrink {
+    animation: shrink 3s linear forwards;
+  }

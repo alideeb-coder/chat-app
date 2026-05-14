@@ -1,0 +1,5 @@
+vendor/
+config/google.php
+uploads/avatars/
+logs/
+config/env.php
