@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             
                 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
                 $host = $_SERVER['HTTP_HOST'];
-                $resetLink = $protocol . '://' . $host . '/chat-app/reset-password.php?token=' . $token;
+                $resetLink = $protocol . '://' . $host . '/reset-password.php?token=' . $token;
 
                 $message = "✅ A reset link has been generated.<br>
                             <a href=\"$resetLink\" class=\"text-blue-600 underline\">Click here to reset your password</a> 
