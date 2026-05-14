@@ -3,7 +3,7 @@ FROM php:8.1-apache
 # تثبيت Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# تثبيت الحزم اللازمة لـ zip و pdo_mysql
+# تثبيت الحزم اللازمة
 RUN apt-get update && apt-get install -y libzip-dev unzip \
     && docker-php-ext-install pdo pdo_mysql zip
 
@@ -13,8 +13,9 @@ COPY . /var/www/html/
 # تشغيل Composer
 RUN cd /var/www/html && composer install --no-dev --optimize-autoloader --no-interaction
 
-# صلاحيات
-RUN chown -R www-data:www-data /var/www/html/uploads
+# إنشاء مجلدات الرفع والسجلات (لأنها محذوفة من Git)
+RUN mkdir -p /var/www/html/uploads/avatars /var/www/html/logs \
+    && chown -R www-data:www-data /var/www/html/uploads /var/www/html/logs
 
 # تفعيل mod_rewrite
 RUN a2enmod rewrite
