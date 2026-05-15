@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } catch (PDOException $e) {
             error_log("register.php error: " . $e->getMessage());
             $errors[] = "A database error occurred. Please try again later.";
-            die($e->getMessage());
         }
     }
 }
