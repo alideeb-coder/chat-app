@@ -42,8 +42,8 @@ class Database
                 $this->conn = new PDO($dsn, $this->user, $this->password, $options);
                 
             } catch (PDOException $e) {
-                
-                die("❌ Database Connection Failed: " . $e->getMessage());
+                error_log("Database Connection Failed: " . $e->getMessage());
+                die("Database Connection Failed");
             }
         }
         return $this->conn;
