@@ -5,7 +5,8 @@ require_once 'config/db.php';
 
 $client = new Google_Client();
 $client->setClientId(getenv('GOOGLE_CLIENT_ID'));
-$client->setClientSecret(getenv('GOOGLE_CLIENT_SECRET'));llback-google.php');
+$client->setClientSecret(getenv('GOOGLE_CLIENT_SECRET'));
+$client->setRedirectUri('https://chat-app-vroj.onrender.com/callback-google.php');
 $client->addScope('email');
 $client->addScope('profile');
 
